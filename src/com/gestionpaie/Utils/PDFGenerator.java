@@ -33,7 +33,7 @@ public class PDFGenerator {
         return o == null ? "" : o.toString();
     }
 }
-package com.gestionpaie.utils;
+/*package com.gestionpaie.utils;
 
 import com.gestionpaie.model.BulletinPaie;
 
@@ -43,7 +43,7 @@ import java.io.PrintWriter;
 /**
  * Générateur simple de bulletin en CSV (remplace l'usage d'iText).
  */
-public class PDFGenerator {
+/*public class PDFGenerator {
 
     public static void genererBulletin(BulletinPaie bulletin, String chemin) {
         // Ecrit un fichier CSV minimal contenant les infos du bulletin
@@ -67,4 +67,4 @@ public class PDFGenerator {
     private static String safe(Object o) {
         return o == null ? "" : o.toString();
     }
-}
+}*/

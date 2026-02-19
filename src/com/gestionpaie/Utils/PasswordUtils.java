@@ -28,7 +28,7 @@ public class PasswordUtils {
         return sb.toString();
     }
 }
-package com.gestionpaie.utils;
+/*package com.gestionpaie.utils;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -57,4 +57,4 @@ public class PasswordUtils {
         }
         return sb.toString();
     }
-}
+}*/

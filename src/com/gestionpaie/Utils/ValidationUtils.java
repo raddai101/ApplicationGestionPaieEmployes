@@ -21,7 +21,7 @@ public class ValidationUtils {
         return str != null && !str.trim().isEmpty();
     }
 }
-package com.gestionpaie.utils;
+/*package com.gestionpaie.utils;
 
 import java.util.regex.Pattern;
 
@@ -43,4 +43,4 @@ public class ValidationUtils {
     public static boolean isNotEmpty(String str) {
         return str != null && !str.trim().isEmpty();
     }
-}
+}*/

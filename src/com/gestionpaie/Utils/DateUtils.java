@@ -15,7 +15,7 @@ public class DateUtils {
         return LocalDate.parse(dateStr, formatter);
     }
 }
-package com.gestionpaie.utils;
+/*package com.gestionpaie.utils;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -31,4 +31,4 @@ public class DateUtils {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return LocalDate.parse(dateStr, formatter);
     }
-}
+}*/
