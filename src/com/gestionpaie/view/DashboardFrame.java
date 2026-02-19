@@ -19,13 +19,27 @@ public class DashboardFrame extends JFrame {
     }
 
     private void initComponents() {
-        tabbedPane = new JTabbedPane();
+        // Couleurs
+        Color blue = new Color(10, 102, 194);
+        Color white = Color.WHITE;
 
+        // navbar
+        JPanel navbar = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        navbar.setBackground(blue);
+        navbar.setBorder(BorderFactory.createEmptyBorder(10,12,10,12));
+        JLabel brand = new JLabel("Squad Brojex");
+        brand.setForeground(white);
+        brand.setFont(brand.getFont().deriveFont(Font.BOLD, 16f));
+        navbar.add(brand);
+        add(navbar, BorderLayout.NORTH);
+
+        tabbedPane = new JTabbedPane();
         tabbedPane.addTab("Employés", new EmployePanel());
         tabbedPane.addTab("Paie", new PaiePanel());
         tabbedPane.addTab("Congés", new CongePanel());
         tabbedPane.addTab("Bulletins", new BulletinPanel());
 
+        getContentPane().setBackground(white);
         add(tabbedPane, BorderLayout.CENTER);
     }
 }
