@@ -60,7 +60,11 @@ public class EmployePanel extends JPanel {
         e.setEmail(email);
         e.setTelephone(telephone);
 
-        if (controller.ajouterEmploye(e)) loadTable();
+        try {
+            if (controller.ajouterEmploye(e)) loadTable();
+        } catch (com.gestionpaie.service.ServiceException se) {
+            JOptionPane.showMessageDialog(this, se.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void onModifier() {
@@ -84,7 +88,11 @@ public class EmployePanel extends JPanel {
         e.setEmail(email);
         e.setTelephone(telephone);
 
-        if (controller.modifierEmploye(e)) loadTable();
+        try {
+            if (controller.modifierEmploye(e)) loadTable();
+        } catch (com.gestionpaie.service.ServiceException se) {
+            JOptionPane.showMessageDialog(this, se.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void onSupprimer() {
@@ -94,16 +102,24 @@ public class EmployePanel extends JPanel {
             return;
         }
         int id = (int) model.getValueAt(row, 0);
-        if (JOptionPane.showConfirmDialog(this, "Confirmer la suppression ?") == JOptionPane.YES_OPTION) {
-            if (controller.supprimerEmploye(id)) loadTable();
-        }
+            if (JOptionPane.showConfirmDialog(this, "Confirmer la suppression ?") == JOptionPane.YES_OPTION) {
+                try {
+                    if (controller.supprimerEmploye(id)) loadTable();
+                } catch (com.gestionpaie.service.ServiceException se) {
+                    JOptionPane.showMessageDialog(this, se.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                }
+            }
     }
 
     public void loadTable() {
         model.setRowCount(0);
-        List<Employe> list = controller.getAllEmployes();
-        for(Employe e : list) {
-            model.addRow(new Object[]{e.getId(), e.getMatricule(), e.getNom(), e.getPrenom(), e.getEmail(), e.getTelephone()});
+        try {
+            List<Employe> list = controller.getAllEmployes();
+            for(Employe e : list) {
+                model.addRow(new Object[]{e.getId(), e.getMatricule(), e.getNom(), e.getPrenom(), e.getEmail(), e.getTelephone()});
+            }
+        } catch (com.gestionpaie.service.ServiceException se) {
+            JOptionPane.showMessageDialog(this, se.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

@@ -25,7 +25,7 @@ public class RetenueDAO {
                 list.add(r);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Erreur lors de la récupération des retenues", e);
         }
         return list;
     }

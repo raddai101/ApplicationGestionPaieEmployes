@@ -15,13 +15,15 @@ public class AuthController {
     }
 
     public Utilisateur login(String username, String password) {
-
-        Utilisateur user = utilisateurDAO.findByUsername(username);
-
-        if (user != null && authService.verifyPassword(password, user.getPasswordHash())) {
-            return user;
+        try {
+            Utilisateur user = utilisateurDAO.findByUsername(username);
+            if (user != null && authService.verifyPassword(password, user.getPasswordHash())) {
+                return user;
+            }
+            return null;
+        } catch (com.gestionpaie.dao.DataAccessException dae) {
+            // remonter comme erreur de service avec message clair
+            throw new com.gestionpaie.service.ServiceException("Erreur de connexion à la base de données: " + dae.getMessage(), dae);
         }
-
-        return null;
     }
 }

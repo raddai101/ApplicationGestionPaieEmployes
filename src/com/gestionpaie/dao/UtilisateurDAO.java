@@ -19,9 +19,9 @@ public class UtilisateurDAO {
                 user.setPasswordHash(rs.getString("password"));
                 user.setRole(rs.getString("role"));
             }
+            return user;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Erreur lors de la recherche de l'utilisateur '" + username + "' en base", e);
         }
-        return user;
     }
 }

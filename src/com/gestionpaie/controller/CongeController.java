@@ -17,12 +17,16 @@ public class CongeController {
         try {
             congeDAO.insert(conge);
             return true;
-        } catch (Exception e) {
-            return false;
+        } catch (com.gestionpaie.dao.DataAccessException dae) {
+            throw new com.gestionpaie.service.ServiceException("Impossible d'ajouter le congé : " + dae.getMessage(), dae);
         }
     }
 
     public List<Conge> getCongesEmploye(int employeId) {
-        return congeDAO.findByEmploye(employeId);
+        try {
+            return congeDAO.findByEmploye(employeId);
+        } catch (com.gestionpaie.dao.DataAccessException dae) {
+            throw new com.gestionpaie.service.ServiceException("Impossible de récupérer les congés de l'employé : " + dae.getMessage(), dae);
+        }
     }
 }

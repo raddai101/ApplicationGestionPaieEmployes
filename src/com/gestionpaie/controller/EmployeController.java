@@ -17,9 +17,8 @@ public class EmployeController {
         try {
             employeDAO.insert(employe);
             return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+        } catch (com.gestionpaie.dao.DataAccessException dae) {
+            throw new com.gestionpaie.service.ServiceException("Impossible d'ajouter l'employé : " + dae.getMessage(), dae);
         }
     }
 
@@ -27,9 +26,8 @@ public class EmployeController {
         try {
             employeDAO.update(employe);
             return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+        } catch (com.gestionpaie.dao.DataAccessException dae) {
+            throw new com.gestionpaie.service.ServiceException("Impossible de modifier l'employé : " + dae.getMessage(), dae);
         }
     }
 
@@ -37,13 +35,16 @@ public class EmployeController {
         try {
             employeDAO.delete(id);
             return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+        } catch (com.gestionpaie.dao.DataAccessException dae) {
+            throw new com.gestionpaie.service.ServiceException("Impossible de supprimer l'employé : " + dae.getMessage(), dae);
         }
     }
 
     public List<Employe> getAllEmployes() {
-        return employeDAO.findAll();
+        try {
+            return employeDAO.findAll();
+        } catch (com.gestionpaie.dao.DataAccessException dae) {
+            throw new com.gestionpaie.service.ServiceException("Impossible de récupérer la liste des employés : " + dae.getMessage(), dae);
+        }
     }
 }

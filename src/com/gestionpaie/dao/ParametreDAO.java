@@ -24,9 +24,10 @@ public class ParametreDAO {
 				return new ParametrePaie(tauxCNSS, tauxIPR, jours);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			// retourner des valeurs par défaut mais loguer l'erreur via exception encapsulée
+			throw new DataAccessException("Erreur lors de la lecture des paramètres de paie", e);
 		}
-		// Valeurs par défaut si non trouvées
+		// Valeurs par défaut si aucune ligne trouvée
 		return new ParametrePaie(6.0, 10.0, 18);
 	}
 }

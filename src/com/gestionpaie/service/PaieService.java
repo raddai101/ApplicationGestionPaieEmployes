@@ -26,32 +26,35 @@ public class PaieService {
      * Génère un bulletin complet pour un employé
      */
     public BulletinPaie genererBulletin(Employe employe) {
+        try {
+            // Récupération des primes et retenues
+            List<Prime> primes = primeDAO.findAll();
+            List<Retenue> retenues = retenueDAO.findAll();
 
-        // Récupération des primes et retenues
-        List<Prime> primes = primeDAO.findAll();
-        List<Retenue> retenues = retenueDAO.findAll();
+            // Paramètres paie (CNSS, IPR, etc.)
+            ParametrePaie params = parametreDAO.getParametres();
 
-        // Paramètres paie (CNSS, IPR, etc.)
-        ParametrePaie params = parametreDAO.getParametres();
+            // Calcul du salaire brut
+            double salaireBrut = calculSalaireService.calculSalaireBrut(employe.getSalaireBase(), primes);
 
-        // Calcul du salaire brut
-        double salaireBrut = calculSalaireService.calculSalaireBrut(employe.getSalaireBase(), primes);
+            // Calcul des retenues
+            double totalRetenues = calculSalaireService.calculTotalRetenues(salaireBrut, retenues);
 
-        // Calcul des retenues
-        double totalRetenues = calculSalaireService.calculTotalRetenues(salaireBrut, retenues);
+            // Salaire net
+            double salaireNet = calculSalaireService.calculSalaireNet(salaireBrut, totalRetenues);
 
-        // Salaire net
-        double salaireNet = calculSalaireService.calculSalaireNet(salaireBrut, totalRetenues);
+            // Création du bulletin
+            BulletinPaie bulletin = new BulletinPaie();
+            bulletin.setEmploye(employe);
+            bulletin.setDatePaie(LocalDate.now());
+            bulletin.setSalaireBrut(salaireBrut);
+            bulletin.setTotalPrimes(primes.stream().mapToDouble(Prime::getMontant).sum());
+            bulletin.setTotalRetenues(totalRetenues);
+            bulletin.setSalaireNet(salaireNet);
 
-        // Création du bulletin
-        BulletinPaie bulletin = new BulletinPaie();
-        bulletin.setEmploye(employe);
-        bulletin.setDatePaie(LocalDate.now());
-        bulletin.setSalaireBrut(salaireBrut);
-        bulletin.setTotalPrimes(primes.stream().mapToDouble(Prime::getMontant).sum());
-        bulletin.setTotalRetenues(totalRetenues);
-        bulletin.setSalaireNet(salaireNet);
-
-        return bulletin;
+            return bulletin;
+        } catch (com.gestionpaie.dao.DataAccessException dae) {
+            throw new ServiceException("Erreur lors de la génération du bulletin : " + dae.getMessage(), dae);
+        }
     }
 }

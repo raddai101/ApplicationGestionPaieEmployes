@@ -22,9 +22,8 @@ public class PaieController {
             BulletinPaie bulletin = paieService.genererBulletin(employe);
             bulletinDAO.insert(bulletin);
             return bulletin;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+        } catch (com.gestionpaie.service.ServiceException | com.gestionpaie.dao.DataAccessException e) {
+            throw new com.gestionpaie.service.ServiceException("Erreur lors de la génération/enregistrement du bulletin : " + e.getMessage(), e);
         }
     }
 
@@ -36,8 +35,8 @@ public class PaieController {
                 String chemin = "bulletin_" + (b.getId() <= 0 ? i++ : b.getId()) + ".csv";
                 com.gestionpaie.utils.PDFGenerator.genererBulletin(b, chemin);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (com.gestionpaie.dao.DataAccessException dae) {
+            throw new com.gestionpaie.service.ServiceException("Erreur lors de l'export des bulletins : " + dae.getMessage(), dae);
         }
     }
 
@@ -48,8 +47,8 @@ public class PaieController {
             for (Employe e : list) {
                 genererBulletin(e);
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (com.gestionpaie.dao.DataAccessException dae) {
+            throw new com.gestionpaie.service.ServiceException("Erreur lors de la génération des bulletins : " + dae.getMessage(), dae);
         }
     }
 }

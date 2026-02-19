@@ -7,7 +7,7 @@ import java.util.List;
 
 public class CongeDAO {
 
-    public void insert(Conge c) throws SQLException {
+    public void insert(Conge c) {
         String sql = "INSERT INTO conge (employe_id, date_debut, date_fin, type, approuve) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -17,6 +17,8 @@ public class CongeDAO {
             ps.setString(4, c.getType());
             ps.setBoolean(5, c.isApprouve());
             ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DataAccessException("Erreur lors de l'ajout du congé", e);
         }
     }
 
@@ -38,7 +40,7 @@ public class CongeDAO {
                 list.add(c);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Erreur lors de la récupération des congés pour l'employé id=" + employeId, e);
         }
         return list;
     }

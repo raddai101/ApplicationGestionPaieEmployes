@@ -8,7 +8,7 @@ import java.util.List;
 
 public class BulletinDAO {
 
-    public void insert(BulletinPaie b) throws SQLException {
+    public void insert(BulletinPaie b) {
         String sql = "INSERT INTO bulletin_paie (employe_id, date_paie, salaire_brut, total_primes, total_retenues, salaire_net) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -19,9 +19,9 @@ public class BulletinDAO {
             ps.setDouble(5, b.getTotalRetenues());
             ps.setDouble(6, b.getSalaireNet());
             ps.executeUpdate();
-        }/*catch (Exception e){
-            System.out.println("Error: " + e);
-        }  */          
+        } catch (SQLException ex) {
+            throw new DataAccessException("Erreur lors de l'ajout du bulletin de paie", ex);
+        }
     }
 
     public List<BulletinPaie> findAll() {
@@ -54,8 +54,8 @@ public class BulletinDAO {
                 b.setEmploye(e);
                 list.add(b);
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (SQLException ex) {
+            throw new DataAccessException("Erreur lors de la récupération des bulletins de paie", ex);
         }
         return list;
     }

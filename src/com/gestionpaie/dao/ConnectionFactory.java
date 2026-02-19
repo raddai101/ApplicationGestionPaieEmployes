@@ -20,7 +20,7 @@ public class ConnectionFactory {
             user = prop.getProperty("db.user");
             password = prop.getProperty("db.password");
         } catch (Exception e) {
-            throw new RuntimeException("Erreur chargement config DB", e);
+            throw new DataAccessException("Impossible de charger le fichier de configuration de la base de données (config.properties)", e);
         }
     }
 

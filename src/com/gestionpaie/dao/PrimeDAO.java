@@ -7,7 +7,7 @@ import java.util.List;
 
 public class PrimeDAO {
 
-    public void insert(Prime p) throws SQLException {
+    public void insert(Prime p) {
         String sql = "INSERT INTO prime (libelle, montant, taxable) VALUES (?, ?, ?)";
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -15,6 +15,8 @@ public class PrimeDAO {
             ps.setDouble(2, p.getMontant());
             ps.setBoolean(3, p.isTaxable());
             ps.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DataAccessException("Erreur lors de l'ajout de la prime", ex);
         }
     }
 
@@ -33,7 +35,7 @@ public class PrimeDAO {
                 list.add(p);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Erreur lors de la récupération des primes", e);
         }
         return list;
     }

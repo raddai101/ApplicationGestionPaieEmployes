@@ -121,14 +121,18 @@ public class LoginFrame extends JFrame {
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
 
-        // Authentification retourne maintenant un Utilisateur (null si échec)
-        com.gestionpaie.model.Utilisateur user = authController.login(username, password);
-        if(user != null) {
-            JOptionPane.showMessageDialog(this, "Connexion réussie !");
-            new DashboardFrame().setVisible(true);
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(this, "Nom d'utilisateur ou mot de passe incorrect", "Erreur", JOptionPane.ERROR_MESSAGE);
+        try {
+            // Authentification retourne maintenant un Utilisateur (null si échec)
+            com.gestionpaie.model.Utilisateur user = authController.login(username, password);
+            if(user != null) {
+                JOptionPane.showMessageDialog(this, "Connexion réussie !");
+                new DashboardFrame().setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Nom d'utilisateur ou mot de passe incorrect", "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (com.gestionpaie.service.ServiceException se) {
+            JOptionPane.showMessageDialog(this, se.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
 

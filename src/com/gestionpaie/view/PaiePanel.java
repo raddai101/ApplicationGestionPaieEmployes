@@ -16,6 +16,13 @@ public class PaiePanel extends JPanel {
         genererButton = new JButton("Générer les bulletins");
         add(genererButton);
 
-        genererButton.addActionListener(e -> controller.genererBulletins());
+        genererButton.addActionListener(e -> {
+            try {
+                controller.genererBulletins();
+                JOptionPane.showMessageDialog(this, "Bulletins générés avec succès !", "Succès", JOptionPane.INFORMATION_MESSAGE);
+            } catch (com.gestionpaie.service.ServiceException se) {
+                JOptionPane.showMessageDialog(this, se.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+        });
     }
 }

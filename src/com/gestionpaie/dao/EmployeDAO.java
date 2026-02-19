@@ -8,7 +8,7 @@ import java.util.List;
 
 public class EmployeDAO {
 
-    public void insert(Employe e) throws SQLException {
+    public void insert(Employe e) {
         String sql = "INSERT INTO employe (matricule, nom, prenom, email, telephone, date_embauche) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -19,10 +19,12 @@ public class EmployeDAO {
             ps.setString(5, e.getTelephone());
             ps.setDate(6, Date.valueOf(e.getDateEmbauche()));
             ps.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DataAccessException("Erreur lors de l'ajout de l'employé", ex);
         }
     }
 
-    public void update(Employe e) throws SQLException {
+    public void update(Employe e) {
         String sql = "UPDATE employe SET nom=?, prenom=?, email=?, telephone=? WHERE id=?";
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -32,15 +34,19 @@ public class EmployeDAO {
             ps.setString(4, e.getTelephone());
             ps.setInt(5, e.getId());
             ps.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DataAccessException("Erreur lors de la modification de l'employé", ex);
         }
     }
 
-    public void delete(int id) throws SQLException {
+    public void delete(int id) {
         String sql = "DELETE FROM employe WHERE id=?";
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
             ps.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DataAccessException("Erreur lors de la suppression de l'employé", ex);
         }
     }
 
@@ -61,8 +67,8 @@ public class EmployeDAO {
                 e.setDateEmbauche(rs.getDate("date_embauche").toLocalDate());
                 list.add(e);
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (SQLException ex) {
+            throw new DataAccessException("Erreur lors de la récupération des employés", ex);
         }
         return list;
     }
@@ -84,8 +90,8 @@ public class EmployeDAO {
                 e.setTelephone(rs.getString("telephone"));
                 e.setDateEmbauche(rs.getDate("date_embauche").toLocalDate());
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (SQLException ex) {
+            throw new DataAccessException("Erreur lors de la recherche de l'employé id=" + id, ex);
         }
         return e;
     }
