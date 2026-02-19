@@ -1,9 +1,9 @@
 package com.gestionpaie.model;
 
-public class RetenueCNSS extends Retenue {
+public class RetenueIPR extends Retenue {
 
-    public RetenueCNSS(double taux) {
-        super("CNSS", taux);
+    public RetenueIPR(double taux) {
+        super("IPR", taux);
     }
 
     @Override
