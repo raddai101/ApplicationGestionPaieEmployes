@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang='fr'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Bulletin de paie - MAT001</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; background-color: #f5f5f5; }
+    .container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); max-width: 900px; margin: 0 auto; }
+    .header { border-bottom: 3px solid #0a66c2; padding-bottom: 20px; margin-bottom: 20px; }
+    .header h1 { margin: 0; color: #0a66c2; font-size: 24px; }
+    .company { color: #666; margin-top: 5px; }
+    .section { margin: 20px 0; }
+    .section h2 { background-color: #f0f0f0; padding: 10px; border-left: 4px solid #0a66c2; margin: 0; font-size: 14px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th { background-color: #0a66c2; color: white; padding: 10px; text-align: left; font-weight: bold; }
+    td { padding: 8px; border-bottom: 1px solid #ddd; }
+    tr:hover { background-color: #f9f9f9; }
+    .label { font-weight: bold; width: 50%; }
+    .amount { text-align: right; }
+    .total-section { margin-top: 20px; padding: 15px; background-color: #f0f8ff; border-left: 4px solid #0a66c2; }
+    .total-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 16px; }
+    .total-label { font-weight: bold; }
+    .total-amount { font-weight: bold; color: #0a66c2; }
+    .footer { margin-top: 30px; text-align: center; font-size: 12px; color: #999; border-top: 1px solid #ddd; padding-top: 15px; }
+    .net-amount { font-size: 18px; color: #28a745; }
+  </style>
+</head>
+<body>
+  <div class='container'>
+    <div class='header'>
+      <h1>BULLETIN DE PAIE</h1>
+      <div class='company'>Squad Brojex - Gestion de Paie</div>
+    </div>
+    <div class='section'>
+      <h2>Informations de l'employé</h2>
+      <table>
+        <tr><td class='label'>Nom:</td><td>Martin</td></tr>
+        <tr><td class='label'>Prénom:</td><td>Alice</td></tr>
+        <tr><td class='label'>Matricule:</td><td>MAT001</td></tr>
+        <tr><td class='label'>Email:</td><td>alice.martin@company.com</td></tr>
+      </table>
+    </div>
+    <div class='section'>
+      <h2>Détails du bulletin</h2>
+      <table>
+        <tr>
+          <th>Libellé</th>
+          <th class='amount'>Montant</th>
+        </tr>
+        <tr><td>Date de paie</td><td class='amount'>20/02/2026</td></tr>
+        <tr><td>Salaire de base</td><td class='amount'>50000,00 €</td></tr>
+        <tr><td>Total primes</td><td class='amount'>405000,00 €</td></tr>
+      </table>
+    </div>
+    <div class='section'>
+      <table>
+        <tr style='background-color: #fff3cd;'>
+          <td class='label'>SALAIRE BRUT</td>
+          <td class='amount' style='font-weight: bold; font-size: 16px;'>455000,00 €</td>
+        </tr>
+      </table>
+    </div>
+    <div class='section'>
+      <h2>Retenues et cotisations</h2>
+      <table>
+        <tr>
+          <th>Libellé</th>
+          <th class='amount'>Montant</th>
+        </tr>
+        <tr><td>Total retenues</td><td class='amount'>7280000,00 €</td></tr>
+      </table>
+    </div>
+    <div class='total-section'>
+      <div class='total-row'>
+        <span class='total-label'>Salaire Brut:</span>
+        <span class='total-amount'>455000,00 €</span>
+      </div>
+      <div class='total-row'>
+        <span class='total-label'>Retenues totales:</span>
+        <span class='total-amount'>-7280000,00 €</span>
+      </div>
+      <div class='total-row' style='border-top: 2px solid #0a66c2; padding-top: 10px; margin-top: 10px; font-size: 18px;'>
+        <span class='total-label'>SALAIRE NET À PAYER:</span>
+        <span class='net-amount'>-6825000,00 €</span>
+      </div>
+    </div>
+    <div class='footer'>
+      <p>Généré le 20/02/2026</p>
+      <p>Ce document est confidentiel et destiné au seul usage de l'employé.</p>
+    </div>
+  </div>
+</body>
+</html>
